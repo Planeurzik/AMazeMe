@@ -7,7 +7,7 @@ LIMITED_TIME = 5*60
 
 def test_wallace():
     from custom_maze import create_maze
-    from philippe_solution import Wallace # change here if you want solution_classic_q_learning
+    from solution_adapted_q_learning import Wallace # change here if you want solution_classic_q_learning
     from oracle import predict_best_ratio
 
     def run(env, wallace, maze):
