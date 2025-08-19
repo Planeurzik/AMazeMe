@@ -80,7 +80,7 @@ With this mechanism, I have my best results with a greedy strategy. Here is a re
 | 21  | 0.7~0.75  | ~0.22 |
 | 29  | 0.43~0.5  | ~0.27 |
 
-These results clearly show the gain we did with this strategy. In addition to increasing the mean score, we have significantly reduced the standard deviation — indicating a more robust algorithm.
+These results clearly show the gain we did with this strategy. In addition to increasing the mean score, we have significantly reduced the standard deviation — indicating a more robust algorithm. However, the increasing size shows the weakness of the algorithm when it has too much cells to explore.
 
 ### A* algorithm
 A common flaw that we observe with Q-learning is that the path taken to go to a treasure is not always the optimal. It would be good to find a method that, once it has a good treasure, it goes directly to the treasure instead of doing the same road that it took to find it.
@@ -99,6 +99,14 @@ The A* algorithm is then much faster as it does not explore every possibility to
 
 ![Alt Text](additional_files/Astarpathfinding.gif)
 
+With this property, we should be able to reduce the performance's gap when we increase the maze size. The idea of the solution would be to establish a map of the maze with the gold locations and then exploit the best. For the exploration, we initialize a map of unknown cells and we update it as the exploration goes on. When we are on one cell, we update the map with the cell we are standing on and the neighbors (if it is wall or empty). Then, we search the closest unknown cells near where we are currently standing and we go to this cell.
+
 ![Alt Text](additional_files/astar_exploration.gif)
 
+The animation above shows how the exploration is made with the algorithm explained before, we see it is meticulously exploring the maze.
+
 ![Alt Text](additional_files/astar_exploration_2.gif)
+
+Here, a blue cell is unknown, a red is a wall and green is empty. It shows the map constructed by the robot during the exploration.
+
+### UCB algorithm
