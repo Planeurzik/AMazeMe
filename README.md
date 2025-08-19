@@ -81,3 +81,24 @@ With this mechanism, I have my best results with a greedy strategy. Here is a re
 | 29  | 0.43~0.5  | ~0.27 |
 
 These results clearly show the gain we did with this strategy. In addition to increasing the mean score, we have significantly reduced the standard deviation — indicating a more robust algorithm.
+
+### A* algorithm
+A common flaw that we observe with Q-learning is that the path taken to go to a treasure is not always the optimal. It would be good to find a method that, once it has a good treasure, it goes directly to the treasure instead of doing the same road that it took to find it.
+
+Let's suppose that we know a good spot for the treasure, but we have to find out the path to go there. We could use Dijkstra algorithm to find the best path, but this would be very long especially for a huge maze. The complexity for Dijkstra in the worst case is $\mathcal{O}((A+S)\log(S))$ where $A$ is the number of edges and $S$ the number of vertices.
+
+A good alternative could be the A* algorithm, a fast implementation of Dijkstra that uses an heuristic. As a reminder, in Dijkstra, we construct a heap queue with on its top, the shortest path from the start. The condition to add a node on top of the queue is: is it still the shortest path from the start?
+
+![Alt Text](additional_files/dijkstra.gif)
+
+On this animation, we can see that it may explore EVERY possibility to find the best path. This is not feasible in our case.
+
+Now we change this a little bit: we take also into account the euclidean distance from a node to the end. This will give us an information on "is it getting closer to the goal?". Therefore, the condition to add a node on top of the queue would be: is the distance from the start + euclidean distance to the end is still the shortest?
+
+The A* algorithm is then much faster as it does not explore every possibility to find the best path and it still finds very short path in a reasonable computing time.
+
+![Alt Text](additional_files/Astarpathfinding.gif)
+
+![Alt Text](additional_files/astar_exploration.gif)
+
+![Alt Text](additional_files/astar_exploration_2.gif)
