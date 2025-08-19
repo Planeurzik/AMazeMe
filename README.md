@@ -19,15 +19,15 @@ For example, in the image below, we have a high amount of gold (in light green) 
 ![Alt Text](additional_files/shortest_path.png)
 
 Ultimately, this can be reduced to the following ratio:
-$$
+```math
 \text{oracle} = \max \frac{\text{gold}}{\text{shortest path to the gold from the start}}
-$$
+```
 If we have found this maximum ratio, we can simply exploit the trajectory to get the maximum amount of gold we could expect.
 
 We can then define this metric :
-$$
+```math
 \text{score} = \frac{\text{mean}(\text{ratio of gold over length of trajectory})}{\text{oracle}}
-$$
+```
 We also return the position found by the oracle to see in the videos if Wallace went to the right spot.
 
 The computation of the score could be found in `additional_files/compute_score.py` where I define 100 mazes for each size so we can see how well Wallace performs with respect to the size of the maze. The script may take around 3 minutes to run.
@@ -35,9 +35,9 @@ The computation of the score could be found in `additional_files/compute_score.p
 ## Solution
 ### Classic Q-learning
 Now that we have a metric, we can design a solution that finds the shortest path to the largest amount of gold. It looks like a classic case of Q-learning. We could store in the Wallace class the last action and last state, define an immediate reward and update the Q-table according to the formula:
-$$
+```math
 Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma \max_a Q(S_{t+1},a) - Q(S_t,A_t)]
-$$
+```
 The code for the classic Q-learning can be found in `additional_files/solution_classic_q_learning.py`. The reward is defined as below:
 * $R_{t+1} = \text{gold}$ if $A_t$ was GATHER and there was gold on $S_t$
 * $R_{t+1} = 1$ if $S_{t+1}$ has gold
