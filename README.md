@@ -109,4 +109,37 @@ The animation above shows how the exploration is made with the algorithm explain
 
 Here, a blue cell is unknown, a red is a wall and green is empty. It shows the map constructed by the robot during the exploration.
 
-### UCB algorithm
+### Upper Confidence Bound algorithm
+
+Now that the maze has been fully explored, we still need to decide **which gold location to pick from**.  
+The challenge is that the amount of gold is stochastic: each time we collect from a location, the reward is drawn from a Gaussian distribution with fixed parameters.  
+
+This naturally leads to a [multi-armed bandit](https://en.wikipedia.org/wiki/Multi-armed_bandit) problem: each gold location is an “arm”, and our goal is to choose the one that gives us the highest long-term payoff.  
+
+If we somehow knew the true mean reward of each location, the solution would be trivial: always pick the gold with the highest mean.  
+But in practice, we must estimate these means from samples. Estimating all of them precisely would require a large number of samples, which is inefficient.  
+Instead, we need a way to quickly identify the most promising location with only a few samples.  
+
+This is where the **Upper Confidence Bound (UCB)** algorithm comes in. Suppose we have visited a gold location \(n\) times, collecting samples \(x_1, x_2, \dots, x_n\).  
+The estimated mean reward is:
+
+```math
+\hat{\mu} = \frac{1}{n}\sum_{i=1}^{n} x_i
+```
+
+However, this estimate comes with uncertainty: with very few samples, our confidence in \(\hat{\mu}\) is low, while with many samples, \(\hat{\mu}\) is likely close to the true mean.  
+
+UCB incorporates this uncertainty by assigning each gold location an **upper confidence bound**:
+
+```math
+UCB(i) = \hat{\mu}_i + C \sqrt{\frac{\log(t)}{n_i(t)}}
+```
+where \(\hat{\mu}_i\) is the estimated mean reward for location \(i\), \(n_i(t)\) is the number of times location \(i\) has been chosen up to time \(t\), and \(C\) is a tunable parameter controlling the exploration–exploitation balance.  
+
+This formula works as follows:  
+
+- The **first term** (\(\hat{\mu}_i\)) favors exploitation by rewarding locations with high observed averages.  
+- The **second term** increases when \(n_i(t)\) is small (few visits), encouraging exploration of less-sampled locations.  
+- Over time, the \(\log(t)\) factor ensures that even unexplored options eventually get reconsidered.  
+
+In short, UCB automatically balances **exploration** (trying uncertain options) and **exploitation** (sticking to the best-known option), allowing us to efficiently discover the gold location with the highest expected reward.  
