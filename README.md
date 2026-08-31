@@ -120,25 +120,25 @@ If we somehow knew the true mean reward of each location, the solution would be 
 But in practice, we must estimate these means from samples. Estimating all of them precisely would require a large number of samples, which is inefficient.  
 Instead, we need a way to quickly identify the most promising location with only a few samples.  
 
-This is where the **Upper Confidence Bound (UCB)** algorithm comes in. Suppose we have visited a gold location \(n\) times, collecting samples \(x_1, x_2, \dots, x_n\).  
+This is where the **Upper Confidence Bound (UCB)** algorithm comes in. Suppose we have visited a gold location $n$ times, collecting samples $x_1, x_2, \dots, x_n$.  
 The estimated mean reward is:
 
 ```math
 \hat{\mu} = \frac{1}{n}\sum_{i=1}^{n} x_i
 ```
 
-However, this estimate comes with uncertainty: with very few samples, our confidence in \(\hat{\mu}\) is low, while with many samples, \(\hat{\mu}\) is likely close to the true mean.  
+However, this estimate comes with uncertainty: with very few samples, our confidence in $\hat{\mu}$ is low, while with many samples, $\hat{\mu}$ is likely close to the true mean.  
 
 UCB incorporates this uncertainty by assigning each gold location an **upper confidence bound**:
 
 ```math
 UCB(i) = \hat{\mu}_i + C \sqrt{\frac{\log(t)}{n_i(t)}}
 ```
-where \(\hat{\mu}_i\) is the estimated mean reward for location \(i\), \(n_i(t)\) is the number of times location \(i\) has been chosen up to time \(t\), and \(C\) is a tunable parameter controlling the exploration–exploitation balance.  
+where $\hat{\mu}_i$ is the estimated mean reward for location $i$, $n_i(t)$ is the number of times location $i$ has been chosen up to time $t$, and $C$ is a tunable parameter controlling the exploration–exploitation balance.  
 
 This formula works as follows:  
 
-- The **first term** (\(\hat{\mu}_i\)) favors exploitation by rewarding locations with high observed averages.  
+- The **first term** $(\hat{\mu}_i)$ favors exploitation by rewarding locations with high observed averages.  
 - The **second term** increases when \(n_i(t)\) is small (few visits), encouraging exploration of less-sampled locations.  
 - Over time, the \(\log(t)\) factor ensures that even unexplored options eventually get reconsidered.  
 
