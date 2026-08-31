@@ -139,7 +139,7 @@ where $\hat{\mu}_i$ is the estimated mean reward for location $i$, $n_i(t)$ is t
 This formula works as follows:  
 
 - The **first term** $(\hat{\mu}_i)$ favors exploitation by rewarding locations with high observed averages.  
-- The **second term** increases when \(n_i(t)\) is small (few visits), encouraging exploration of less-sampled locations.  
-- Over time, the \(\log(t)\) factor ensures that even unexplored options eventually get reconsidered.  
+- The **second term** increases when $n_i(t)$ is small (few visits), encouraging exploration of less-sampled locations.  
+- Over time, the $\log(t)$ factor ensures that even unexplored options eventually get reconsidered.  
 
 In short, UCB automatically balances **exploration** (trying uncertain options) and **exploitation** (sticking to the best-known option), allowing us to efficiently discover the gold location with the highest expected reward.  
