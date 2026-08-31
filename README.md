@@ -143,3 +143,11 @@ This formula works as follows:
 - Over time, the $\log(t)$ factor ensures that even unexplored options eventually get reconsidered.  
 
 In short, UCB automatically balances **exploration** (trying uncertain options) and **exploitation** (sticking to the best-known option), allowing us to efficiently discover the gold location with the highest expected reward.  
+
+With this new approach, we get these scores. It shows that this strategy is particularly effective when we go with bigger mazes.
+
+| Size  | Mean score | Standard Deviation |
+| ------------- | ------------- | ------------- |
+| 13  | 0.88~0.9  | 0.12~0.14 |
+| 21  | 0.8~0.81  | 0.16~0.17 |
+| 29  | 0.71~0.73  | 0.14~0.16 |
